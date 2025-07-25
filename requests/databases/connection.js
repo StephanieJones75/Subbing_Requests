@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
 const mysql = require ('mysql2');
 const env = require('dotenv').config();
 
@@ -13,5 +14,10 @@ connection.connect((error) => {
     if(error) console.log(error);
     else console.log("Connected");
 });
+
+connection.connect((error) => {
+    if(error) console.log(error);
+    else console.log("Connected");
+})
 
 module.exports = connection;
