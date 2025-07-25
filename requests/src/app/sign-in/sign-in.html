@@ -1,0 +1,33 @@
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Sign In</h2>
+    <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+        @if (loginError) {
+        <div class="alert alert-danger" role="alert">{{ loginError }}</div>
+        }
+        <div>
+            <label class="form-label">Email: </label>
+            <input type="email" id="email" class="form-control" formControlName="email">
+                <!-- [ngClass]="{ 'is-invalid': signInForm.get('email')?.touched && signInForm.get('email')?.invalid }"> -->
+            @if (signInForm.get('email')?.touched && signInForm.get('email')?.invalid) {
+            <div class="invalid-feedback">
+                @if (signInForm.get('email')?.errors?.['required']) { <div>Email is required.</div> }
+                @if (signInForm.get('email')?.errors?.['email']) { <div>Please enter a valid email address.</div> }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password: </label>
+            <input type="password" id="password" class="form-control" formControlName="password">
+                <!-- [ngClass]="{ 'is-invalid': signInForm.get('password')?.touched && signInForm.get('password')?.invalid }"> -->
+            @if (signInForm.get('password')?.touched && signInForm.get('password')?.invalid) {
+            <div class="invalid-feedback">
+                @if (signInForm.get('password')?.errors?.['required']) { <div>Password is required.</div> }
+            </div>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="signInForm.invalid">Sign In</button>
+    </form>
+
+
+</div>
