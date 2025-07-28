@@ -7,8 +7,9 @@
         }
         <div>
             <label class="form-label">Email: </label>
-            <input type="email" id="email" class="form-control" formControlName="email">
-                <!-- [ngClass]="{ 'is-invalid': signInForm.get('email')?.touched && signInForm.get('email')?.invalid }"> -->
+            <input type="email" id="email" class="form-control"
+                   formControlName="email"
+                   [ngClass]="{ 'is-invalid': signInForm.get('email')?.touched && signInForm.get('email')?.invalid }">
             @if (signInForm.get('email')?.touched && signInForm.get('email')?.invalid) {
             <div class="invalid-feedback">
                 @if (signInForm.get('email')?.errors?.['required']) { <div>Email is required.</div> }

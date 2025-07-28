@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ChildInterface } from '../child-interface';
 import { NgForm, FormsModule } from '@angular/forms';
+import { response } from 'express';
+import { RequestService } from '../request-service';
 
 
 @Component({
@@ -12,24 +14,29 @@ import { NgForm, FormsModule } from '@angular/forms';
 export class AddRequests {
   getChild: any;
 
-  constructor() {
+  constructor(private requestService: RequestService) {
     this.getChild()
   }
-  onSubmit(form: NgForm) {
-    if (form.invalid) {
-      // Optionally, handle invalid form state
-      return;
-    }
-
-    // 1. Here you would typically gather the form data and send it to a service.
-    // const requestData = form.value;
-    // this.requestService.submitRequest(requestData).subscribe(response => {
-    //   console.log('Request submitted successfully!', response);
-    //   form.resetForm(); // Reset form on success
-    // });
-
-    console.log('Form Submitted with values:', form.value);
-    // 2. After successful submission, reset the form to clear all fields.
-    form.resetForm();
+  onSubmit(form: any) {
+    
+     // Collect form values as needed
+    const request = {
+      child: form.value.child,
+      team: form.value.colour,
+      date: form.value.requestdate1 // or whichever date you want
+    };
+    this.requestService.addRequest(request);
+    form.reset();
   }
+      // Save request to localStorage
+// const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+// requests.push({ child: '', team: '', date: '' });
+// localStorage.setItem('requests', JSON.stringify(requests));
+//     // 1. Log the response to the console for debugging purposes.
+//     console.log('Form submitted successfully!', form.value);
+
+//     console.log('Request submitted successfully!', response);
+//     // 2. After successful submission, reset the form to clear all fields.
+//     form.resetForm();
+//   }
 }

@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+  { providedIn: 'root'}
+)
 export class LoginService {
   
   constructor() { }
@@ -24,7 +24,7 @@ export class LoginService {
     return !this.jwtHelper.isTokenExpired(token);
   }
   userLogin(data: {}) {
-    return this.http.post<{ token?: string }>('http://localhost:3000/signin/', data).pipe(
+    return this.http.post<{ token?: string }>('http://localhost:3000/staff', data).pipe(
       tap(response => {
         if (response.token && this.isBrowser()) {
           localStorage.setItem('token', response.token);

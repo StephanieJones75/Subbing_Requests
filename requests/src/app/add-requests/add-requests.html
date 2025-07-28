@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html>
 <html lang="en">
 
 <head>
@@ -10,65 +10,57 @@
 </head>
 
 <body>
-    <a routerLink="/staff-signup" class="btn btn-primary mx-2">View All Requests</a>
+    <a routerLink="/staff-signup" button class="btn btn-primary mx-2">View All Requests</a>
     <div class="container mt-3">
         <h2>Create Request</h2>
         <p>Enter the request here. You can add up to five dates for one child.</p>
         <form #requestForm="ngForm" (ngSubmit)="onSubmit(requestForm)">
             <div class="mb-3 mt-3">
                 <label for="name" placeholder="scroll to select child"> Child: </label><br>
-                <input type="text" id="name" name="name"><br>
+                <select class="form-select" name="child" ngModel>
+                    <option selected>Select Child</option>
+                    <option value="1">Harsh</option>
+                    <option value="2">Mostafa</option>
+                    <option value="3">Amber</option>
+                    <option value="4">Stephen</option>
+                </select>
             </div>
             <div class="mb-3 mt-3">
                 <label for="colour">Colour Team:</label><br>
-                <input type="text" id="colour" name="colour"><br>
+                <select class="form-select" name="colour" ngModel>
+                    <option selected>Select Color Team</option>
+                    <option value="1">Blue</option>
+                    <option value="2">Green</option>
+                    <option value="3">Orange</option>
+                    <option value="4">Yellow</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label id="date" class="form-label">Date of Request:</label>
-                <label for="requestdate">Select Date:</label>
-                <!-- <input matInput [matDatepicker]="pickerRequest" id="requestdate" name="requestdate" placeholder="Select Date">
-                <mat-datepicker-toggle matSuffix [for]="pickerRequest"></mat-datepicker-toggle>
-                <mat-datepicker #pickerRequest></mat-datepicker> -->
+                <input type="date" class="form-control" id="requestdate" name="requestdate" placeholder="Select Date">
+               
             </div>
             <div class="mb-3">
                 <label id="date1" class="form-label">Date Required:</label>
-                <select class="form-select" id="requireddate1" name="requireddate1" placeholder="Selecte Date">
-                    <!-- <input matInput [matDatepicker]="pickerRequest" id="requestdate" name="requestdate" placeholder="Select Date">
-                <mat-datepicker-toggle matSuffix [for]="pickerRequest"></mat-datepicker-toggle>
-                <mat-datepicker #pickerRequest></mat-datepicker> -->
-                </select>
+                <input type="date" class="form-control" id="requestdate1" name="requestdate1" placeholder="Select Date">
+              
+
             </div>
             <div class="mb-3">
                 <label id="date2" class="form-label"></label>
-                <select class="form-select" id="requireddate2" name="requireddate2" placeholder="Selecte Date">
-                    <!-- <input matInput [matDatepicker]="pickerRequest" id="requestdate" name="requestdate" placeholder="Select Date">
-                <mat-datepicker-toggle matSuffix [for]="pickerRequest"></mat-datepicker-toggle>
-                <mat-datepicker #pickerRequest></mat-datepicker> -->
-                </select>
+                <input type="date" class="form-control" id="requestdate2" name="requestdate2" placeholder="Select Date">
             </div>
             <div class="mb-3">
                 <label id="date3" class="form-label"></label>
-                <select class="form-select" id="requireddate3" name="requireddate3" placeholder="Selecte Date">
-                    <!-- <input matInput [matDatepicker]="pickerRequest" id="requestdate" name="requestdate" placeholder="Select Date">
-                <mat-datepicker-toggle matSuffix [for]="pickerRequest"></mat-datepicker-toggle>
-                <mat-datepicker #pickerRequest></mat-datepicker> -->
-                </select>
+                <input type="date" class="form-control" id="requestdate3" name="requestdate3" placeholder="Select Date">
             </div>
             <div class="mb-3">
                 <label id="date4" class="form-label"></label>
-                <select class="form-select" id="requireddate4" name="requireddate4" placeholder="Selecte Date">
-                    <!-- <input matInput [matDatepicker]="pickerRequest" id="requestdate" name="requestdate" placeholder="Select Date">
-                <mat-datepicker-toggle matSuffix [for]="pickerRequest"></mat-datepicker-toggle>
-                <mat-datepicker #pickerRequest></mat-datepicker> -->
-                </select>
+               <input type="date" class="form-control" id="requestdate4" name="requestdate4" placeholder="Select Date">
             </div>
             <div class="mb-3">
                 <label id="date5" class="form-label"></label>
-                <select class="form-select" id="requireddate5" name="requireddate5" placeholder="Selecte Date">
-                    <!-- <input matInput [matDatepicker]="pickerRequest" id="requestdate" name="requestdate" placeholder="Select Date">
-                <mat-datepicker-toggle matSuffix [for]="pickerRequest"></mat-datepicker-toggle>
-                <mat-datepicker #pickerRequest></mat-datepicker> -->
-                </select>
+                <input type="date" class="form-control" id="requestdate5" name="requestdate5" placeholder="Select Date">
             </div>
             <button type="submit" class="btn btn-primary mx-2">Submit Request</button>
         </form>
