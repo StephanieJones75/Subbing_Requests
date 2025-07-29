@@ -19,6 +19,24 @@ try {
         return res.json(error);
     }
 });
+app.get('/staff/:payroll_id', async (req, res) => {
+    let payroll_id = req.params.id;
+    
+    if (!payroll_id || isNaN(payroll_id)) return res.status(400).json({ message: "Please provide a Staff ID" });
+    
+    try {
+        const [data] = await connection.promise().query(
+            `SELECT * 
+                FROM ${process.env.DATABASE}.staff
+                WHERE payroll_id = ?`, payroll_id);
+
+        if (data.length > 0) return res.send(data);
+        else return  res.json({ message: "Staff not found" });
+    } catch (error) {
+        return  res.json(error);
+    }
+
+});
 
 app.get('/child', async (req, res) => {
     try {
@@ -38,13 +56,17 @@ app.post('/signin', async (req, res) => {
 
     try {
         const [data] = await connection.promise().query(`
-            SELECT user_id, username, password
-            FROM ${process.env.DATABASE}.users 
+            SELECT payroll_id , email, password
+            FROM ${process.env.DATABASE}.staff 
             WHERE email = ? `, email);
         if (data.length > 0) {
-            const passResult = await bcrypt.compare(password, data[0].password);
-            if(passResult){
+            // const passResult = await bcrypt.compare(password, data[0].password); Uncomment when using bcrypt
+            const passResult = password === data[0].password; // For testing purposes, replace with bcrypt comparison in production
+            if (data[0].email === email && data[0].password === password){
+            // if(passResult){
+            console.log('User authenticated successfully', process.env.KEY);
                 const token = await jwt.sign({payroll_id:data[0].payroll_id}, process.env.KEY,  { expiresIn: '1h' });
+                console.log(token);
                 return res.status(200).json({'token': token});    
             } else {
                 return res.status(401).json({ message: 'Authentication failed!'});
