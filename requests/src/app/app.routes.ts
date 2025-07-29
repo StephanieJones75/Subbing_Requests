@@ -5,6 +5,7 @@ import { StaffSignup } from './staff-signup/staff-signup';
 import { LogoutPage } from './logout-page/logout-page';
 import { SignIn } from './sign-in/sign-in';
 import { LoginService } from './login-service';
+import { authGuard } from './guard/auth-guard';
 
 export const routes: Routes = [
     {
@@ -24,20 +25,15 @@ export const routes: Routes = [
     {
         path: 'staff-signup',
         component: StaffSignup,
-        // canActivate: [LoginService]
+        //     canActivate: [authGuard]
     },
     {
         path: 'logout',
         component: LogoutPage
     },
     {
-        path: 'protected',
-        component: AddRequests,
-        canActivate: [LoginService] // Ensure user is authenticated
-    },
-    {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'home'
+        redirectTo: 'sign-in'
     }
 ];

@@ -1,7 +1,10 @@
+<div class="container">
+  <h1>Welcome to the Subbing Request Site</h1>
+  <h4>Please sign in to access subbing information.</h4>
+</div>
 <div class="container mt-5">
 
-    <h2 class="text-center mb-4">Sign In</h2>
-    <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+        <form [formGroup]="signInForm" (ngSubmit)="signIn()">
         @if (loginError) {
         <div class="alert alert-danger" role="alert">{{ loginError }}</div>
         }

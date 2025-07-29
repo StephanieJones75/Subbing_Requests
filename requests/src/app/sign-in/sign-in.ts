@@ -3,25 +3,26 @@ import { RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../login-service';
+import { StaffService } from '../staff-service';
 
 @Component({
   selector: 'app-sign-in',
   imports: [ReactiveFormsModule, RouterModule, CommonModule],
   standalone: true,
-  providers: [LoginService],
+  providers: [StaffService],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css'
 })
 export class SignIn implements OnInit {
   signInForm!: FormGroup; // <-- Use definite assignment
-  loginService = inject(LoginService);
+  staffService = inject(StaffService);
   route = inject(Router);
   loginError: string | null = null;
   fb = inject(FormBuilder); // <-- Inject FormBuilder
 
   signIn() {
     if (this.signInForm.valid) {
-      this.loginService.userLogin(this.signInForm.value).subscribe({
+      this.staffService.userLogin(this.signInForm.value).subscribe({
         next: () => {
           this.route.navigate(['/add-requests']);
         },

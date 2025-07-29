@@ -1,10 +1,8 @@
 import { inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoginService } from '../login-service'
+import { CanActivateFn, Router } from '@angular/router';
+import { LoginService } from '../login-service';
 
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateFn } from '@angular/router';
-
-export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree => {
+export const authGuard: CanActivateFn = (route, state) => {
   const loginService = inject(LoginService);
   const router = inject(Router);
 
@@ -13,5 +11,6 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   }
 
   // If not authenticated, redirect to the sign-in page
-  return router.createUrlTree(['/sign-in']);
+  router.navigate(['/sign-in']);
+  return false;
 };

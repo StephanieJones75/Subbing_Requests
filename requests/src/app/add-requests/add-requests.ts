@@ -12,10 +12,10 @@ import { RequestService } from '../request-service';
   styleUrl: './add-requests.css'
 })
 export class AddRequests {
-  getChild: any;
+  
 
   constructor(private requestService: RequestService) {
-    this.getChild()
+    
   }
   onSubmit(form: any) {
     
