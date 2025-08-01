@@ -24,6 +24,6 @@ export class Navbar {
 
   logOut() {
     this.loginService.logOut();
-     this.router.navigate(['sign-in']);
+     this.router.navigate(['logout']);
   }
 }

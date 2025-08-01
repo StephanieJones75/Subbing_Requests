@@ -8,10 +8,7 @@ import { LoginService } from './login-service';
 import { authGuard } from './guard/auth-guard';
 
 export const routes: Routes = [
-    {
-        path: 'home',
-        component: HomePage
-    },
+   
     {
         path: 'sign-in',
         component: SignIn,

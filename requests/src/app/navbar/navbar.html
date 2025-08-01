@@ -7,18 +7,20 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
-            <form class="d-flex">
+           
+                <ul class="navbar-nav me-auto">
+                    @if(isLoggedIn$ | async) {
 
-                @if(isLoggedIn$ | async) {
-
-                <ul class="navbar-nav me-auto"></ul>
-
-                <button class="btn btn-outline-warning mx-2" (click)="logOut()" type="button">Log Out</button>
-
-                } @else {
-                <!-- <a routerLink="/sign-in" button class="btn btn-outline-primary mx-2" type="button">Sign In</a> -->
-                }
-            </form>
+                    <button class="btn btn-outline-warning mx-2" (click)="logOut()" type="button">Log Out</button>
+                    } @else {
+                    <li class="nav-item">
+                        <a routerLink="/sign-in" class="mx-2">
+                            <button class="btn btn-outline-primary" type="button">Sign In</button>
+                        </a>
+                    </li>
+                    }
+                </ul>
+           
         </div>
     </div>
 </nav>

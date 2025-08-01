@@ -1,16 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { RequestsInterface } from './requests-interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
-  private requests: any[] = [];
+  
+  http: HttpClient = inject(HttpClient);
+  apiUrl: string = "http://localhost:3000/requests";
 
-  addRequest(request: any) {
-    this.requests.push(request);
+  constructor() { };
+
+  getRequestById(childId: number): Observable<RequestsInterface> {
+    return this.http.get<RequestsInterface>(`${this.apiUrl}requests/${childId}`);
   }
 
-  getRequests() {
-    return this.requests;
+  getAllRequests(): Observable<RequestsInterface[]> {
+    return this.http.get<RequestsInterface[]>(`${this.apiUrl}requests/`);
+  }
+  addRequest(childId: number, data: RequestsInterface) {
+    return this.http.post<RequestsInterface>(`${this.apiUrl}requests/`, data);
+  }
+  deleteRequest(childId: number){
+    return this.http.delete(`${this.apiUrl}delete/${childId}`);
+  }
+  updateRequest(childId: number, data: RequestsInterface) {
+    return this.http.put<RequestsInterface>(`${this.apiUrl}update/${childId}`, data)
+
   }
 }

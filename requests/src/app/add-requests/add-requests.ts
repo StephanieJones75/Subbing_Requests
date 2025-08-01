@@ -1,42 +1,67 @@
-import { Component } from '@angular/core';
-import { ChildInterface } from '../child-interface';
-import { NgForm, FormsModule } from '@angular/forms';
-import { response } from 'express';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { FormsModule, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RequestService } from '../request-service';
+import { RequestsInterface } from '../requests-interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { get } from 'http';
 
 
 @Component({
   selector: 'app-add-requests',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './add-requests.html',
   styleUrl: './add-requests.css'
 })
 export class AddRequests {
-  
+  @Input() request: RequestsInterface | null = null;
+  addRequest!: FormGroup;
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+  childId = 0;
 
-  constructor(private requestService: RequestService) {
+  requestForm = new FormGroup({
+    child: new FormControl(''),
+    team: new FormControl(''),
+    date_requested: new FormControl(''),
+    date_required1: new FormControl(''),
+  });
+  private requestService = inject(RequestService);
+
+  ngOnInit() {
+    this.childId = Number(this.route.snapshot.params['childid']);
+    if (this.childId > 0) {
+      this.requestService.getRequestById(this.childId).subscribe((data: any) => {
+        const request = Array.isArray(data) ? data[0] : data;
+        if (request) {
+          this.request = request;
+          this.requestForm.patchValue(request);
+        }
+      });
+    }
+  }
+
+  onSubmit() {
+    this.router.navigate(['/staff-signup']); //Go to Staff signup page after adding request
+    // if (this.requestForm.valid) {
+    //   // const formValue = this.requestForm.value;
+    //   const formData = this.requestForm.value as unknown as RequestsInterface;
+    //   if (this.childId) {
+    //     this.requestService.updateRequest(this.childId, formData).subscribe(() => {
+    //       this.router.navigate(['/staff-signup']); //Go to Staff signup page after update
+    //     });
+
+    //   } else {
+    //     this.requestService.addRequest(this.childId, formData).subscribe(() => {
+    //       this.router.navigate(['/staff-signup']); //Go to Staff signup page after adding request
+    //     });
+    //   }
+    // }
+    }
+
+  onCancel() {
+    this.requestForm.reset(); //Reset the form to start over but stay on add request page
     
   }
-  onSubmit(form: any) {
-    
-     // Collect form values as needed
-    const request = {
-      child: form.value.child,
-      team: form.value.colour,
-      date: form.value.requestdate1 // or whichever date you want
-    };
-    this.requestService.addRequest(request);
-    form.reset();
-  }
-      // Save request to localStorage
-// const requests = JSON.parse(localStorage.getItem('requests') || '[]');
-// requests.push({ child: '', team: '', date: '' });
-// localStorage.setItem('requests', JSON.stringify(requests));
-//     // 1. Log the response to the console for debugging purposes.
-//     console.log('Form submitted successfully!', form.value);
-
-//     console.log('Request submitted successfully!', response);
-//     // 2. After successful submission, reset the form to clear all fields.
-//     form.resetForm();
-//   }
 }
