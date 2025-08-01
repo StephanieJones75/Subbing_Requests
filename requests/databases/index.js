@@ -9,6 +9,27 @@ const bcrypt = require('bcrypt');
 app.use(express.json())
 app.use(cors())
 
+// const Child = require('./models/child');
+// const Staff = require('./models/staff');
+// const Requests = require('./models/requests');
+
+// const child_router = require('./routes/child');
+// const requests_router = require('./routes/requests');
+
+// Requests.hasmany(Child, {
+//     foreignKey: 'child',
+//     sourceKey: 'request_id'
+// });
+
+// Child.belongsTo(Requests, {
+//     foreignKey: 'child',
+//     targetKey: 'request_id'
+// });
+
+// app.get('/', (req, res) => {
+//     res.send('Welcome to the Subbing Database API');
+// });
+
 app.get('/staff', async (req, res) => {
 try {
         const [data] = await connection.promise().query(
@@ -38,16 +59,43 @@ app.get('/staff/:payroll_id', async (req, res) => {
 
 });
 
-app.get('/child', async (req, res) => {
-    try {
-        const [data] = await connection.promise().query(
-            `SELECT * FROM ${process.env.DATABASE}.child`);
-            if(data.length > 0) return res.json(data);
-            else return res.json({ message: "Child not found" });
-    } catch (error) {
-        return res.json(error);
-    }
-});
+// app.get('/child/:childid', async (req, res) => {
+// let childid = req.params.childid;
+    
+//     if (!childid || isNaN(childid)) return res.status(400).json({ message: "Please provide a Child ID" });
+    
+//        try {
+//         const [data] = await connection.promise().query(
+//             `SELECT * FROM ${process.env.DATABASE}.child WHERE ChildId = ?`, childid);
+//             if(data.length > 0) return res.json(data);
+//             else return res.json({ message: "Child not found" });
+//     } catch (error) {
+//         return res.json(error);
+//     }
+// });
+
+// app.get('/requests', async (req, res) => {
+//     try {
+//         const [data] = await connection.promise().query(
+//             `SELECT * FROM ${process.env.DATABASE}.requests`);
+//             if(data.length > 0) return res.json(data);
+//             else return res.json({ message: "Request not found" });
+//     } catch (error) {
+//         return res.json(error);
+//     }
+// });
+
+// app.post('/requests', async (req, res) => {
+//     let { child, team, date_requested, date_required1} = req.body; 
+//     try {
+//         const [data] = await connection.promise().query(
+//             `SELECT * FROM ${process.env.DATABASE}.requests`);
+//             if(data.length > 0) return res.json(data);
+//             else return res.json({ message: "Request created successfully" });
+//     } catch (error) {
+//         return res.json(error);
+//     }
+// });
 
 app.post('/signin', async (req, res) => {
     let { email, password } = req.body;
